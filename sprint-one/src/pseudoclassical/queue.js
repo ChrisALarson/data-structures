@@ -17,7 +17,7 @@ Queue.prototype.enqueue = function(value) {
 Queue.prototype.dequeue = function() {
   if (this.count > 0) {
     let firstItem = this.storage[this.firstIndex];
-    delete firstItem;
+    delete this.storage[this.firstIndex];
     this.firstIndex++;
     this.count = this.lastIndex - this.firstIndex + 1;
     return firstItem;
@@ -27,5 +27,3 @@ Queue.prototype.dequeue = function() {
 Queue.prototype.size = function() {
   return this.count;
 };
-
-

@@ -19,7 +19,7 @@ var queueMethods = {
   dequeue: function() {
     if (this.count > 0) {
       let firstItem = this.storage[this.firstIndex];
-      delete firstItem;
+      delete this.storage[this.firstIndex];
       this.firstIndex++;
       this.count = this.lastIndex - this.firstIndex + 1;
       return firstItem;
@@ -29,5 +29,3 @@ var queueMethods = {
     return this.count;
   }
 };
-
-

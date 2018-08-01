@@ -17,7 +17,7 @@ let Queue = function() {
   queue.dequeue = function() {
     if (queue.count > 0) {
       let firstItem = queue.storage[queue.firstIndex];
-      delete firstItem;
+      delete queue.storage[queue.firstIndex];
       queue.firstIndex++;
       queue.count = queue.lastIndex - queue.firstIndex + 1;
       return firstItem;

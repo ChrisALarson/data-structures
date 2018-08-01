@@ -11,7 +11,7 @@ let Stack = function() {
   stack.pop = function() {
     if (stack.count > 0) {
       let topItem = stack.storage[stack.count];
-      delete topItem;
+      delete stack.storage[stack.count];
       stack.count--;
       return topItem;
     }

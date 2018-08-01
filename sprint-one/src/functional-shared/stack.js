@@ -21,15 +21,13 @@ let stackMethods = {
   },
   pop: function() {
     if (this.count > 0) {
-      let lastItem = this.storage[this.count];
-      delete lastItem;
+      let topItem = this.storage[this.count];
+      delete this.storage[this.count];
       this.count--;
-      return lastItem;
+      return topItem;
     }
   },
   size: function() {
     return this.count;
   }
 };
-
-
