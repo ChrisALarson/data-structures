@@ -1,11 +1,8 @@
-var Stack = function() {
-  var stack = {};
-
-  // Use an object with numeric keys to store values
+let Stack = function() {
+  let stack = {};
   stack.storage = {};
   stack.count = 0;
 
-  // Implement the methods below
   stack.push = function(value) {
     stack.count++;
     stack.storage[stack.count] = value;
