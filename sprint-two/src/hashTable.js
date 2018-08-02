@@ -13,23 +13,47 @@ var HashTable = function() {
 
 HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  this._storage[index] = v;
+  let newEntry = {
+      key: k,
+      val: v,
+      next: null
+    };
+  if (this._storage[index] === undefined || this._storage[index].key === k) {
+    this._storage[index] = newEntry;
+  } else if (this._storage[index] !== undefined && this._storage[index].key !== k) {
+    this._storage[index].next = newEntry;
+  }
 };
 
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  return this._storage[index];
+  // given index, aka bucket:
+  // call lookForKeyInEntry on the bucket's value (entry in the bucket)
+    // if the key in the entry is ===
+      // return the value
+    // else if the key is not ===, and there is a next:
+      // return the output of calling lookForKeyInEntry on next
+    // else if key doesn't match, and there is no next
+      // return false
+
+  let lookForKeyInEntry = function(entry) {
+    if (entry.key === k){
+      return entry.val;
+    } else if (entry.next !== null) {
+      return lookForKeyInEntry(entry.next);
+    }
+    return false;
+  }
+
+  if (this._storage[index] !== undefined) {
+    return lookForKeyInEntry(this._storage[index]);
+  }
 };
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   this._storage[index] = undefined;
 };
-
-// let ourHashTable = new HashTable();
-// console.log(ourHashTable);
-// console.log('GetIndexBelowMaxForKey: ' + getIndexBelowMaxForKey('val1', 8));
-
 
 /*
  * Complexity: What is the time complexity of the above functions?
