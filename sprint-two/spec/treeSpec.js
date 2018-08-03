@@ -18,12 +18,15 @@ describe('tree', function() {
 
   it('should return true for a value that the tree contains', function() {
     tree.addChild(5);
+    tree.addChild(7);
     expect(tree.contains(5)).to.equal(true);
+    expect(tree.contains(7)).to.equal(true);
   });
 
   it('should return false for a value that was not added', function() {
     tree.addChild(5);
     expect(tree.contains(6)).to.equal(false);
+    expect(tree.contains(10)).to.equal(false);
   });
 
   it('should be able to add children to a tree\'s child', function() {

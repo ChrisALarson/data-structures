@@ -6,10 +6,6 @@ var HashTable = function() {
   this._storage = [];
 };
 
-// let getIndexBelowMaxForKey = function(key, limit) {
-//   let index = parseInt(key[0], 32);
-//   return Math.floor(index / 10);
-// };
 
 HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
@@ -17,24 +13,30 @@ HashTable.prototype.insert = function(k, v) {
       key: k,
       val: v,
       next: null
-    };
-  if (this._storage[index] === undefined || this._storage[index].key === k) {
+  };
+  let handleInsertCollisions = function(node) {
+    if (node.key === k) {
+      node.val = v;
+    } else {
+      if (node.next === null) {
+        node.next = newEntry;
+      } else {
+        handleInsertCollisions(node.next);
+      }
+    }
+  };
+  
+  //Added test to check if multiple collisions can be handled
+  if (this._storage[index] === undefined) {
     this._storage[index] = newEntry;
-  } else if (this._storage[index] !== undefined && this._storage[index].key !== k) {
-    this._storage[index].next = newEntry;
+  } else {
+    handleInsertCollisions(this._storage[index]);
   }
+ 
 };
 
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  // given index, aka bucket:
-  // call lookForKeyInEntry on the bucket's value (entry in the bucket)
-    // if the key in the entry is ===
-      // return the value
-    // else if the key is not ===, and there is a next:
-      // return the output of calling lookForKeyInEntry on next
-    // else if key doesn't match, and there is no next
-      // return false
 
   let lookForKeyInEntry = function(entry) {
     if (entry.key === k){
@@ -54,6 +56,22 @@ HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   this._storage[index] = undefined;
 };
+
+// var getIndexBelowMaxForKey = function(str, max) {
+//   var hash = 0;
+//   for (var i = 0; i < str.length; i++) {
+//     hash = (hash << 5) + hash + str.charCodeAt(i);
+//     hash = hash & hash; // Convert to 32bit integer
+//     hash = Math.abs(hash);
+//   }
+//   return hash % max;
+// };
+
+// let ourTable = new HashTable();
+// console.log(ourTable);
+// ourTable.insert('hello', 'hello');
+// console.log(ourTable);
+
 
 /*
  * Complexity: What is the time complexity of the above functions?
