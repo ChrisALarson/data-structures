@@ -52,12 +52,6 @@ let Node = function(value) {
 
 let myLinkedList = LinkedList();
 
-console.log(myLinkedList);
-myLinkedList.addToTail(4);
-console.log(myLinkedList);
-myLinkedList.addToTail(6);
-console.log(myLinkedList);
-
 /*
  * Complexity: What is the time complexity of the above functions?
  */
