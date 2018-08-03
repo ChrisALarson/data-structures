@@ -19,6 +19,9 @@ let LinkedList = function() {
 
   list.removeHead = function() {
     let currentHeadValue = list.head.value;
+    if (list.head.next === null) { 
+      list.tail = null;
+    }
     list.head = list.head.next;
     return currentHeadValue;
   };
@@ -32,7 +35,7 @@ let LinkedList = function() {
       } else {
         return checkNodeForTarget(node.next);
       }
-    }
+    };
 
     return checkNodeForTarget(list.head);
   };
@@ -42,12 +45,13 @@ let LinkedList = function() {
 
 let Node = function(value) {
   let node = {};
-
+  
   node.value = value;
   node.next = null;
 
   return node;
 };
+
 
 /*
  * Complexity: What is the time complexity of the above functions?

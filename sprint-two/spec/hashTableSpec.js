@@ -50,6 +50,42 @@ describe('hashTable', function() {
     window.getIndexBelowMaxForKey = oldHashFunction;
   });
 
+  //Overriding something mid-list (re-implement insert)
+  it('should handle overwriting of collided entries', function() {
+    var v1 = 'val1';
+    var v2 = 'val2';
+    var v3 = 'val3';
+    var oldHashFunction = window.getIndexBelowMaxForKey;
+    window.getIndexBelowMaxForKey = function() { return 0; };
+    hashTable.insert(v1, v1);
+    hashTable.insert(v2, v2);
+    hashTable.insert(v3, v3);
+    hashTable.insert(v2, 'newVal');
+    expect(hashTable.retrieve(v1).next).to.equal(v2);
+    expect(hashTable.retrieve(v2).value).to.equal('newVal');
+    expect(hashTable.retrieve(v3).previous).to.equal(v2);
+    
+    window.getIndexBelowMaxForKey = oldHashFunction;
+  });
+
+  //Removing something mid-list (re-implement remove)
+  it('should handle removal of collided entries', function() {
+    var v1 = 'val1';
+    var v2 = 'val2';
+    var v3 = 'val3';
+    var oldHashFunction = window.getIndexBelowMaxForKey;
+    window.getIndexBelowMaxForKey = function() { return 0; };
+    hashTable.insert(v1, v1);
+    hashTable.insert(v2, v2);
+    hashTable.insert(v3, v3);
+    hashTable.remove(v2);
+    expect(hashTable.retrieve(v1).next).to.equal(v3);
+    expect(hashTable.retrieve(v2)).to.equal(undefined);
+    expect(hashTable.retrieve(v3).previous).to.equal(v1);
+    
+    window.getIndexBelowMaxForKey = oldHashFunction;
+  });
+
   // (Advanced! Remove the extra "x" when you want the following tests to run)
   xit ('should double in size when needed', function() {
     _.each(people, function(person) {

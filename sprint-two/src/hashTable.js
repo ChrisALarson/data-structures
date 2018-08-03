@@ -8,11 +8,19 @@ var HashTable = function() {
 
 
 HashTable.prototype.insert = function(k, v) {
+
+
   var index = getIndexBelowMaxForKey(k, this._limit);
+// storage = array
+// bucket = doublyLinkedList
+// associations = tuple
+
+// let newNode = Node([k, v]);
+    // { val: [k, v] }
   let newEntry = {
-      key: k,
-      val: v,
-      next: null
+    //key: k,
+    val: [k, v],
+    next: null
   };
   let handleInsertCollisions = function(node) {
     if (node.key === k) {
@@ -39,13 +47,13 @@ HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
 
   let lookForKeyInEntry = function(entry) {
-    if (entry.key === k){
+    if (entry.key === k) {
       return entry.val;
     } else if (entry.next !== null) {
       return lookForKeyInEntry(entry.next);
     }
     return false;
-  }
+  };
 
   if (this._storage[index] !== undefined) {
     return lookForKeyInEntry(this._storage[index]);
@@ -56,6 +64,16 @@ HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   this._storage[index] = undefined;
 };
+
+
+
+let ourList = LinkedList();
+let newEntry = Node('first node!');
+//newEntry.key = 'first key here';
+ourList.addToTail('first node no key');
+console.log(ourList);
+
+
 
 // var getIndexBelowMaxForKey = function(str, max) {
 //   var hash = 0;

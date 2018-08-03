@@ -67,4 +67,17 @@ describe('linkedList', function() {
     expect(linkedList.contains(11)).to.equal(true);
     expect(linkedList.contains(5)).to.equal(false);
   });
+
+  it('should reset head and tail to null when all nodes are deleted from list', function() {
+    linkedList.addToTail(1);
+    linkedList.addToTail(2);
+    linkedList.addToTail(3);
+    linkedList.removeHead();
+    linkedList.removeHead();
+    linkedList.removeHead();
+    expect(linkedList.head).to.equal(null);
+    expect(linkedList.tail).to.equal(null);
+    console.log(linkedList);
+  });
+
 });
