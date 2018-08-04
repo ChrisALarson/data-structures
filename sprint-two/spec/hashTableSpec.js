@@ -1,7 +1,6 @@
 describe('hashTable', function() {
   var hashTable;
-  var people = [['Steven', 'Tyler'], ['George', 'Harrison'], ['Mr.', 'Doob'], ['Dr.', 'Sunshine'], ['John', 'Resig'], ['Brendan', 'Eich'], ['Alan', 'Turing']];
-
+  var people = [['Steven', 'Tyler'], ['George', 'Harrison'], ['Mr.', 'Doob'], ['Dr.', 'Sunshine'], ['John', 'Resig'], ['Brendan', 'Eich'], ['Alan', 'Turing'], ['Yoko', 'Ono'], ['Bob', 'Dole'], ['William', 'Clinton'], ['Mohamed', 'Ali'], ['Barbara', 'Streisand'], ['Zyzzx', 'Xylophone'], ['12345string', 'Weirdname']];
 
   beforeEach(function() {
     hashTable = new HashTable();
@@ -14,7 +13,6 @@ describe('hashTable', function() {
   });
 
   it('should store values that were inserted', function() {
-    debugger;
     hashTable.insert('Steven', 'Seagal');
     expect(hashTable.retrieve('Steven')).to.equal('Seagal');
   });
@@ -42,7 +40,6 @@ describe('hashTable', function() {
     var v3 = 'val3';
     var oldHashFunction = window.getIndexBelowMaxForKey;
     window.getIndexBelowMaxForKey = function() { return 0; };
-    //debugger;
     hashTable.insert(v1, v1);
     hashTable.insert(v2, v2);
     hashTable.insert(v3, v3);
@@ -97,14 +94,15 @@ describe('hashTable', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
-      debugger;
+      // debugger;
       hashTable.insert(firstName, lastName);
       expect(hashTable.retrieve(firstName)).to.equal(lastName);
     });
     expect(hashTable._limit).to.equal(16);
+    console.log(hashTable);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -117,6 +115,9 @@ describe('hashTable', function() {
     hashTable.remove('Steven');
     hashTable.remove('John');
     hashTable.remove('Mr.');
+    hashTable.remove('William');
+    hashTable.remove('Barbara');
+    hashTable.remove('Zzyzx');
     expect(hashTable._limit).to.equal(8);
   });
 });

@@ -16,7 +16,7 @@ HashTable.prototype.getBucket = function(index) {
 }
 
 HashTable.prototype.insert = function(k, v) {
-  this.resize();
+  this.upsize();
   let index = getIndexBelowMaxForKey(k, this._limit);
   let bucket = this.getBucket(index);
   let node = bucket.retrieveTuple(k);
@@ -31,40 +31,55 @@ HashTable.prototype.retrieve = function(k) {
 };
 
 HashTable.prototype.remove = function(k) {
-  //check if need to be resized
-  
+  this.downsize();
   let index = getIndexBelowMaxForKey(k, this._limit);
   let bucket = this.getBucket(index);
   let node = bucket.retrieveTuple(k);
+  console.log(node.value);
   return (node !== -1) ? bucket.deleteNode(node) : undefined;
 };
 
-HashTable.prototype.resize = function(){
-  let ratio = (this._initialized / this._limit)
-
-  let reHash = function(node) {
-    this.insert(node.value[0], node.value[1]);
-  };
-
-  let changeSize = function(newSize) {
-    let copyStorage = this._storage.slice()
-    this._storage = LimitedArray(newSize)
-    copyStorage.each(function(list){
-      if (list){
+HashTable.prototype.upsize = function(){
+  let that = this;
+  let ratio = (that._initialized / that._limit);
+  
+  if (ratio >= 0.6) {
+    console.log('Imma resize foo');
+    that._limit *= 2;
+    let copyStorage = that._storage;
+    that._storage = LimitedArray(that._limit);
+    that._initialized = 0;
+    copyStorage.each(function(list) {
+      if (list) {
         let node = list.head;
-          reHash(node);
-        while (node.next) {
+        while (node) {
+          that.insert(node.value[0], node.value[1]);
           node = node.next;
-          reHash(node);
-        };
+        }
       }
     });
-  }; 
+  }
+};
 
-  if (ratio >= .75) {
-    changeSize(this._limit *= 2);
-  } else if (ratio <= .25 && this._limit > 8) {
-    changeSize(this._limit /= 2);
+HashTable.prototype.downsize = function(){
+  let that = this;
+  let ratio = (that._initialized / that._limit);
+
+  if (ratio <= 0.25 && that._limit > 8) {
+    console.log('Imma resize foo');
+    that._limit /= 2;
+    let copyStorage = that._storage;
+    that._storage = LimitedArray(that._limit);
+    that._initialized = 0;
+    copyStorage.each(function(list) {
+      if (list) {
+        let node = list.head;
+        while (node) {
+          that.insert(node.value[0], node.value[1]);
+          node = node.next;
+        }
+      }
+    });
   }
 }
 
