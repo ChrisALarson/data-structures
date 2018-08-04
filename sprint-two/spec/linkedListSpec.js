@@ -77,7 +77,6 @@ describe('linkedList', function() {
     linkedList.removeHead();
     expect(linkedList.head).to.equal(null);
     expect(linkedList.tail).to.equal(null);
-    console.log(linkedList);
   });
 
 });

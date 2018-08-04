@@ -105,7 +105,6 @@ describe('doublyLinkedList', function() {
     doublyLinkedList.removeHead();
     expect(doublyLinkedList.head).to.equal(null);
     expect(doublyLinkedList.tail).to.equal(null);
-    console.log(doublyLinkedList);
   });
 
   it('should reset head and tail to null when all nodes are deleted from list with removeTail', function() {
@@ -117,7 +116,6 @@ describe('doublyLinkedList', function() {
     doublyLinkedList.removeTail();
     expect(doublyLinkedList.head).to.equal(null);
     expect(doublyLinkedList.tail).to.equal(null);
-    console.log(doublyLinkedList);
   });
 
   it('should return false when removing node from empty list', function() {

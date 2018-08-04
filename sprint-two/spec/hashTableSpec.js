@@ -99,7 +99,6 @@ describe('hashTable', function() {
       expect(hashTable.retrieve(firstName)).to.equal(lastName);
     });
     expect(hashTable._limit).to.equal(16);
-    console.log(hashTable);
   });
 
   it ('should halve in size when needed', function() {
@@ -118,6 +117,8 @@ describe('hashTable', function() {
     hashTable.remove('William');
     hashTable.remove('Barbara');
     hashTable.remove('Zzyzx');
+    hashTable.remove('Alan');
+    hashTable.remove('Bob');
     expect(hashTable._limit).to.equal(8);
   });
 });
