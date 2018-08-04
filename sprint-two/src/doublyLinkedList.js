@@ -4,8 +4,6 @@ let DoublyLinkedList = function() {
   list.tail = null;
   
   list.addToHead = function(value) {
-    //set node.next to current head
-    //reassign head to node
     let node = DoubleNode(value);
 
     if (list.tail === null) {
@@ -64,28 +62,12 @@ let DoublyLinkedList = function() {
 
   //Removes first node to match target (in the event of duplicate values)
   list.removeNode = function(target) {
-    let deleteNode = function(node) {
-      if (node.previous === null && node.next === null) {
-        list.head = null;
-        list.tail = null;
-      } else if (node === list.tail) {
-        list.tail = node.previous;
-        node.previous.next = node.next;
-      } else if (node === list.head) {
-        list.head = node.next;
-        node.next.previous = node.previous;
-      } else {
-        node.next.previous = node.previous;
-        node.previous.next = node.next;
-      }
-      return node.value;
-    };
     let checkNodeForTarget = function(node) {
       if (node === null) {
         return false;
       }
       if (node.value === target) {
-        return deleteNode(node);
+        return list.deleteNode(node);
       } else if (node.next === null) {
         return false;
       } else {
@@ -93,24 +75,24 @@ let DoublyLinkedList = function() {
       }
     };
 
-    // if, once node is found, node.prev === null and node.next === null
-      // set list.head and list.tail to null
-    
-    // if, once node is found, node === the tail ..
-      // set tail to node.prev
-      // set node.prev.next = node.next
-      // do NOT set node.next.prev = node.prev
-
-    // if, once node is found, node === the head ..
-      // set head to node.next
-      // set node.next.prev = node.prev
-      // do NOT set node.prev.next = node.next
-
-    // else, once node is found ...
-      // set node.next.prev = node.prev
-      // set node.prev.next = node.next
-
     return checkNodeForTarget(list.head);
+  };
+  
+  list.deleteNode = function(node) {
+    if (node.previous === null && node.next === null) {
+      list.head = null;
+      list.tail = null;
+    } else if (node === list.tail) {
+      list.tail = node.previous;
+      node.previous.next = node.next;
+    } else if (node === list.head) {
+      list.head = node.next;
+      node.next.previous = node.previous;
+    } else {
+      node.next.previous = node.previous;
+      node.previous.next = node.next;
+    }
+    return node.value;
   };
 
   list.contains = function(target) {
@@ -122,6 +104,23 @@ let DoublyLinkedList = function() {
         return true;
       } else if (node.next === null) {
         return false;
+      } else {
+        return checkNodeForTarget(node.next);
+      }
+    };
+
+    return checkNodeForTarget(list.head);
+  };
+
+  list.retrieveTuple = function(target) {
+    let checkNodeForTarget = function(node) {
+      if (node === null) {
+        return -1;
+      }
+      if (node.value[0] === target) {
+        return node;
+      } else if (node.next === null) {
+        return -1;
       } else {
         return checkNodeForTarget(node.next);
       }

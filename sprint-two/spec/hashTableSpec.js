@@ -41,6 +41,7 @@ describe('hashTable', function() {
     var v3 = 'val3';
     var oldHashFunction = window.getIndexBelowMaxForKey;
     window.getIndexBelowMaxForKey = function() { return 0; };
+    //debugger;
     hashTable.insert(v1, v1);
     hashTable.insert(v2, v2);
     hashTable.insert(v3, v3);
@@ -61,9 +62,9 @@ describe('hashTable', function() {
     hashTable.insert(v2, v2);
     hashTable.insert(v3, v3);
     hashTable.insert(v2, 'newVal');
-    expect(hashTable.retrieve(v1).next).to.equal(v2);
-    expect(hashTable.retrieve(v2).value).to.equal('newVal');
-    expect(hashTable.retrieve(v3).previous).to.equal(v2);
+    expect(hashTable.retrieve(v1)).to.equal(v1);
+    expect(hashTable.retrieve(v2)).to.equal('newVal');
+    expect(hashTable.retrieve(v3)).to.equal(v3);
     
     window.getIndexBelowMaxForKey = oldHashFunction;
   });
@@ -79,9 +80,9 @@ describe('hashTable', function() {
     hashTable.insert(v2, v2);
     hashTable.insert(v3, v3);
     hashTable.remove(v2);
-    expect(hashTable.retrieve(v1).next).to.equal(v3);
+    expect(hashTable.retrieve(v1)).to.equal(v1);
     expect(hashTable.retrieve(v2)).to.equal(undefined);
-    expect(hashTable.retrieve(v3).previous).to.equal(v1);
+    expect(hashTable.retrieve(v3)).to.equal(v3);
     
     window.getIndexBelowMaxForKey = oldHashFunction;
   });
