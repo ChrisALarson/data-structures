@@ -14,6 +14,7 @@ describe('hashTable', function() {
   });
 
   it('should store values that were inserted', function() {
+    debugger;
     hashTable.insert('Steven', 'Seagal');
     expect(hashTable.retrieve('Steven')).to.equal('Seagal');
   });
@@ -87,11 +88,16 @@ describe('hashTable', function() {
     window.getIndexBelowMaxForKey = oldHashFunction;
   });
 
+  it('should handle removal on empty buckets', function() {
+    expect(hashTable.remove('key')).to.equal(undefined);
+  });
+
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
+      debugger;
       hashTable.insert(firstName, lastName);
       expect(hashTable.retrieve(firstName)).to.equal(lastName);
     });
